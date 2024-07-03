@@ -1,6 +1,4 @@
-#!/bin/sh
-'''exec' "/Volumes/stuff/Productivity/Personal/Coding/Canteen Meal Notifer/venv/bin/python3.11" "$0" "$@"
-' '''
+#!/root/Canteen-Meal-Notifer-Vidyalaya/venv/bin/python3
 # -*- coding: utf-8 -*-
 import re
 import sys

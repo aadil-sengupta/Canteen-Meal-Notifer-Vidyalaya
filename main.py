@@ -6,12 +6,13 @@ from datetime import date, datetime, timedelta
 from discord_webhook import DiscordWebhook, DiscordEmbed
 import sqlite3
 import os
+import requests
 #import pickle # used to save and load cookies
 
 # Check if Database Exists:
 webhookError = DiscordWebhook(url="https://discord.com/api/webhooks/1199953897389826152/Lxw2-gbfR7MuPiZB9n0mOva9XNkP1RBFU2gaZvx3aPXq153MFcaPyzpY0sFJqHZqgjIg")
 webhookBatch = DiscordWebhook.create_batch(urls=["https://discord.com/api/webhooks/1199953897389826152/Lxw2-gbfR7MuPiZB9n0mOva9XNkP1RBFU2gaZvx3aPXq153MFcaPyzpY0sFJqHZqgjIg", "https://discord.com/api/webhooks/1203032557159977060/QBlPTZH-CJy8kLyatxI5OKNu8wZkgDEzH041QmZiRroKzXp2DStMZkaU5WP7FLM9J0Kq"])
-database_path = 'canteen.db'
+database_path = '/Canteen-Meal-Notifer-Vidyalaya/canteen.db'
 
 def errorOccoured(e):
     embed = DiscordEmbed(title=f'Error', description=e, color="880808")
@@ -33,6 +34,9 @@ def format_food(food_string):
 def getFood():
     options = webdriver.ChromeOptions()
     #options.add_argument("--user-data-dir=/Users/aadils/Library/Application Support/Google/Chrome/Profile 1")
+    options.add_argument('--headless')
+    options.add_argument('--no-sandbox')  # Bypass OS security model, MUST be the very first option
+    options.add_argument('--disable-dev-shm-usage')  # Overcome limited resource problems
     options.headless = True
     driver = webdriver.Chrome(options=options)
     driver.get("https://nhss.onlinevidyalaya.net/Pages/StudentManagement/CanteenMenu.aspx")
@@ -152,3 +156,11 @@ embed = DiscordEmbed(title="Navrachana Sama Canteen Bot", description=f'''
 for i in webhookBatch:
     i.add_embed(embed)
     response = i.execute()
+
+requests.post("http://localhost:3000/send/message", {'phone':'120363295006728236','message':f'''*Navrachana Sama Canteen Bot*
+
+*Date:* {result[0]}
+*Food:*
+{result[1]}
+
+Made with ❤️ by Aadil :)'''})
