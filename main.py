@@ -43,8 +43,8 @@ def getFood():
 
     if driver.current_url == 'https://nhss.onlinevidyalaya.net/Pages/BaseFramework/Security/Login.aspx?OrgGroupId=1965' or driver.title == 'Login':
         print('Login Page')
-        driver.find_element(By.ID, 'userNameTextBox').send_keys('13134b')
-        driver.find_element(By.ID, 'passwordTextBox').send_keys('aadil2112')
+        driver.find_element(By.ID, 'userNameTextBox').send_keys('')
+        driver.find_element(By.ID, 'passwordTextBox').send_keys('')
         driver.find_element(By.ID, 'chkRememberMe').click()
         driver.find_element(By.ID, 'loginButton').click()
 
